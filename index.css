@@ -1,0 +1,18 @@
+.box{
+    background:#5BD6F9;
+    width: 90vw;
+    height: 30vh;
+    font-size: 15vh;
+    color:#FFFFFF;
+}
+
+
+#information{
+    font-size: 15vh;
+    color: green;
+}
+
+
+.phone{
+    font-size: 5vh;
+}
