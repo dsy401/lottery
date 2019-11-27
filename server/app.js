@@ -18,6 +18,8 @@ app.all('*',function (req, res, next) {
     }
 });
 
+app.use('/',())
+
 app.use('/',(req,res)=>{
     let result = []
     fs.createReadStream('./data/people.csv')
@@ -27,8 +29,9 @@ app.use('/',(req,res)=>{
         }).on("end",()=>{
             res.json(result)
     })
-
 });
+
+
 
 
 

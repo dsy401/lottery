@@ -24,22 +24,21 @@
 
         t=null;
         function StartClick() {
-            t = setInterval(function () {
-                lucky_guy = result[Math.floor(Math.random()*result.length)];
-                document.getElementById("result").innerHTML =
-                    "<div>"+lucky_guy.Name+"</div>"
-                    +   "<div class='phone'>"+ GetLastFourDigits(lucky_guy.Phone.toString())+"</div>"
-            },30)
+            if (t ==null){
+                t = setInterval(function () {
+                    lucky_guy = result[Math.floor(Math.random()*result.length)];
+                    document.getElementById("result").innerHTML =
+                        "<div>"+lucky_guy.Name+"</div>"
+                        +   "<div class='phone'>"+ GetLastFourDigits(lucky_guy.Phone.toString())+"</div>"
+                },30)
+            }
         }
 
 
         function StopClick(){
-            if (t !== null){
-                clearInterval(t);
-                t = null;
-                localStorage.setItem("lucky_guy",JSON.stringify(lucky_guy))
-                alert("congratulations, "+ lucky_guy.Name)
-            }
+            clearInterval(t);
+            t = null;
+            localStorage.setItem("lucky_guy",JSON.stringify(lucky_guy))
         }
 
 
