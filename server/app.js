@@ -43,6 +43,22 @@ app.use('/add',(req,res)=>{
     });
 });
 
+app.use('/delete',(req,res)=>{
+    fs.readFile('./data/people.json',(err,data)=>{
+        if (err) throw err;
+        let people = JSON.parse(data);
+        const PeopleDeleted = req.body.Phone
+        people = people.filter(function (obj) {
+            return obj.Phone !== PeopleDeleted
+        });
+        fs.writeFile("./data/people.json",JSON.stringify(people),err=>{
+            if (err) throw err;
+            res.json({msg:"success"})
+        })
+    })
+
+});
+
 
 app.use('/',(req,res)=>{
     fs.readFile('./data/people.json', (err, data) => {

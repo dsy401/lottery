@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>People List</title>
+    <script>
+        window.onload = LoadData
+
+        function LoadData() {
+            let xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function(){
+                if(xmlhttp.status == 200 && xmlhttp.readyState == 4){
+                    JSON.parse(xmlhttp.responseText).forEach((s,i)=>{
+                        document.getElementById("table").innerHTML +=
+                            "<tr id='tr-"+ s.Phone.toString() +"'><td>"+s.Name+"</td><td>"+s.Phone+"</td><td onclick='Delete(\""+ s.Phone +"\")' class='delete'>Delete</td></tr>"
+                    })
+                }
+            };
+            xmlhttp.open("GET","https://lotterynewpearl.herokuapp.com/",true);
+            xmlhttp.send();
+        }
+
+
+        function Delete(people) {
+            const data = JSON.stringify({Phone:people})
+            fetch("https://lotterynewpearl.herokuapp.com/delete",{
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: data,
+
+            })
+                .then(res=>res.json())
+                .then(res=>{
+                    document.getElementById("tr-"+people).remove()
+                    alert("People Deleted.")
+                })
+                .catch(err=>{
+                    alert("Server error")
+                })
+        }
+    </script>
+    <style>
+        body{
+            width: 90vw;
+            text-align: center;
+        }
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+
+        .delete{
+            cursor: pointer;
+            text-decoration: underline;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <table id="table">
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Phone Number
+                </th>
+                <th>
+                    Control
+                </th>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
